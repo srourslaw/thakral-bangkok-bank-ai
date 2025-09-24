@@ -367,6 +367,112 @@
             text-align: center;
         }
 
+        /* Customer Analysis Dashboard Panel */
+        .dashboard-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .dashboard-panel.active {
+            display: block;
+        }
+
+        .panel-header {
+            color: #ffd700;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: #ccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .chart-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 0;
+            min-height: 400px;
+        }
+
+        .insight-box {
+            background: rgba(251, 191, 36, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #fbbf24;
+            margin: 20px 0;
+        }
+
+        .insight-title {
+            color: #fbbf24;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .insight-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .technical-details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Metrics Cards */
         .metrics-grid {
             display: grid;
@@ -580,6 +686,46 @@
             </div>
 
             <div id="apiResponse" class="api-response" style="display: none;"></div>
+
+            <!-- Customer Analysis Dashboard -->
+            <div id="customerAnalysisPanel" class="dashboard-panel">
+                <div class="panel-header" id="customerName">🏦 Customer Risk Analysis</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" id="riskLevel">LOW</div>
+                        <div class="metric-label">Risk Assessment</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="riskProbability">12%</div>
+                        <div class="metric-label">Risk Probability</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="confidenceScore">94%</div>
+                        <div class="metric-label">Confidence Score</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="processingTime">2s</div>
+                        <div class="metric-label">Processing Time</div>
+                    </div>
+                </div>
+                <div class="chart-row">
+                    <div class="chart-panel">
+                        <canvas id="customerRiskChart"></canvas>
+                    </div>
+                    <div class="chart-panel">
+                        <canvas id="alternativeDataChart"></canvas>
+                    </div>
+                </div>
+                <div class="insight-box">
+                    <div class="insight-title">💼 Business Recommendation</div>
+                    <div class="insight-content" id="businessRecommendation">
+                        Loan approved at preferred rate with premium customer benefits.
+                    </div>
+                </div>
+                <div class="technical-details" id="technicalDetails">
+                    Customer ID: BBK-ABC123DEF | Model: Bangkok_Bank_SAS_AI_v2.1 | Processing: <2s vs 45min traditional
+                </div>
+            </div>
         </div>
 
         <!-- Portfolio Intelligence Dashboard -->
@@ -650,10 +796,11 @@
     </div>
 
     <script>
-        // API Base URL
+        // API Base URL (for demo purposes - real API would be different)
         const API_BASE = 'https://f2883b069684.ngrok-free.app';
-        const MOBILE_URL = 'https://f2883b069684.ngrok-free.app';
+        const MOBILE_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/chapters/banking-intelligence.html';
         const DASHBOARD_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/';
+        const API_DOCS_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/chapters/deployment-pipeline.html';
 
         // Customer data for testing
         const customerData = {
@@ -730,7 +877,7 @@
             });
 
             // API QR
-            QRCode.toCanvas(document.getElementById('apiQR'), API_BASE + '/docs', {
+            QRCode.toCanvas(document.getElementById('apiQR'), API_DOCS_URL, {
                 width: 180,
                 margin: 2,
                 color: {
@@ -744,47 +891,159 @@
         function testCustomer(type) {
             const customer = customerData[type];
             const responseDiv = document.getElementById('apiResponse');
+            const dashboardPanel = document.getElementById('customerAnalysisPanel');
 
-            responseDiv.style.display = 'block';
-            responseDiv.innerHTML = '🔄 Analyzing customer profile with SAS AI model...';
-            responseDiv.scrollIntoView({ behavior: 'smooth' });
+            // Hide old response div and show dashboard
+            responseDiv.style.display = 'none';
+            dashboardPanel.classList.add('active');
+            dashboardPanel.scrollIntoView({ behavior: 'smooth' });
 
-            // Show simulated API call
+            // Update customer name in header
+            const customerNames = {
+                premium: 'Siriporn Tanaka - Premium Analysis',
+                standard: 'Anuchai Srisuk - Standard Analysis',
+                high_risk: 'Malee Kittisak - Risk Analysis'
+            };
+            document.getElementById('customerName').textContent = `🏦 ${customerNames[type]}`;
+
+            // Show loading state
+            document.getElementById('riskLevel').textContent = '...';
+            document.getElementById('businessRecommendation').textContent = '🔄 Analyzing customer profile with SAS AI model...';
+
+            // Simulate API call and update dashboard
             setTimeout(() => {
-                const mockResponse = {
-                    customer_id: `BBK-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
-                    risk_assessment: {
-                        risk_level: type === 'premium' ? 'LOW' : type === 'standard' ? 'MEDIUM' : 'HIGH',
-                        risk_probability: type === 'premium' ? 0.12 : type === 'standard' ? 0.34 : 0.67,
-                        confidence_score: type === 'premium' ? 0.94 : type === 'standard' ? 0.87 : 0.91
-                    },
-                    alternative_data_insights: {
-                        social_media_impact: type === 'premium' ? '+12% accuracy lift' : type === 'standard' ? '+8% accuracy lift' : '+15% risk detection',
-                        device_behavior_score: customer.DeviceUsageScore,
-                        relationship_depth: customer.NumberOfProducts > 3 ? 'Deep' : customer.NumberOfProducts > 1 ? 'Standard' : 'Limited'
-                    },
-                    recommendations: {
-                        loan_decision: type === 'premium' ? 'APPROVE' : type === 'standard' ? 'APPROVE_WITH_CONDITIONS' : 'REFER_TO_SPECIALIST',
-                        interest_rate: type === 'premium' ? '3.2%' : type === 'standard' ? '4.1%' : '5.8%',
-                        suggested_limit: type === 'premium' ? customer.LoanAmount : type === 'standard' ? customer.LoanAmount * 0.9 : customer.LoanAmount * 0.6
-                    },
-                    business_impact: {
-                        processing_time: '<2 seconds vs 45 minutes traditional',
-                        analyst_time_saved: '89%',
-                        customer_experience: type === 'premium' ? 'Premium white-glove service' : type === 'standard' ? 'Streamlined approval process' : 'Specialist consultation offered'
-                    },
-                    timestamp: new Date().toISOString(),
-                    model_version: 'Bangkok_Bank_SAS_AI_v2.1'
+                const riskData = {
+                    premium: { level: 'LOW', prob: '12%', conf: '94%', color: '#10b981' },
+                    standard: { level: 'MEDIUM', prob: '34%', conf: '87%', color: '#fbbf24' },
+                    high_risk: { level: 'HIGH', prob: '67%', conf: '91%', color: '#ef4444' }
                 };
 
-                responseDiv.innerHTML = JSON.stringify(mockResponse, null, 2);
+                const risk = riskData[type];
+
+                // Update metrics
+                document.getElementById('riskLevel').textContent = risk.level;
+                document.getElementById('riskLevel').style.color = risk.color;
+                document.getElementById('riskProbability').textContent = risk.prob;
+                document.getElementById('confidenceScore').textContent = risk.conf;
+
+                // Update business recommendation
+                const recommendations = {
+                    premium: 'Loan approved at preferred 3.2% rate with premium customer benefits and white-glove service.',
+                    standard: 'Loan approved with conditions at 4.1% rate. Streamlined approval process with standard benefits.',
+                    high_risk: 'Refer to specialist for detailed consultation. Potential approval at 5.8% rate with enhanced monitoring.'
+                };
+                document.getElementById('businessRecommendation').textContent = recommendations[type];
+
+                // Update technical details
+                const customerId = `BBK-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+                document.getElementById('technicalDetails').textContent =
+                    `Customer ID: ${customerId} | Model: Bangkok_Bank_SAS_AI_v2.1 | Processing: <2s vs 45min traditional`;
+
+                // Create charts
+                createCustomerRiskChart(type);
+                createCustomerAlternativeDataChart(type);
 
                 // Track interaction
                 gtag('event', 'customer_test', {
-                    'event_category': 'Banking Intelligence',
+                    'event_category': 'Banking Intelligence Dashboard',
                     'event_label': type
                 });
-            }, 2000);
+            }, 1500);
+        }
+
+        function createCustomerRiskChart(customerType) {
+            const ctx = document.getElementById('customerRiskChart').getContext('2d');
+
+            const riskScores = {
+                premium: [95, 88, 92, 85, 90],
+                standard: [72, 68, 75, 70, 73],
+                high_risk: [45, 38, 42, 35, 40]
+            };
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Credit History', 'Income Stability', 'Debt Ratio', 'Social Score', 'Device Behavior'],
+                    datasets: [{
+                        label: 'Risk Factors',
+                        data: riskScores[customerType],
+                        borderColor: customerType === 'premium' ? '#10b981' : customerType === 'standard' ? '#fbbf24' : '#ef4444',
+                        backgroundColor: customerType === 'premium' ? 'rgba(16, 185, 129, 0.2)' : customerType === 'standard' ? 'rgba(251, 191, 36, 0.2)' : 'rgba(239, 68, 68, 0.2)',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: 'white' } },
+                        title: {
+                            display: true,
+                            text: 'Risk Factor Analysis',
+                            color: 'white',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            ticks: { color: 'white', backdropColor: 'transparent' },
+                            grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                            pointLabels: { color: 'white', font: { size: 12 } },
+                            min: 0,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createCustomerAlternativeDataChart(customerType) {
+            const ctx = document.getElementById('alternativeDataChart').getContext('2d');
+
+            const improvements = {
+                premium: [72, 79, 84, 87.6],
+                standard: [68, 74, 79, 83.2],
+                high_risk: [65, 71, 76, 79.8]
+            };
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Traditional', '+ Social Media', '+ Device Data', '+ Full Alt Data'],
+                    datasets: [{
+                        label: 'Model Accuracy',
+                        data: improvements[customerType],
+                        borderColor: '#ffd700',
+                        backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#ffd700',
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { labels: { color: 'white' } },
+                        title: {
+                            display: true,
+                            text: 'Alternative Data Impact',
+                            color: 'white',
+                            font: { size: 16, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        x: { ticks: { color: 'white' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } },
+                        y: {
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            min: 60,
+                            max: 90,
+                            title: { display: true, text: 'Accuracy %', color: 'white' }
+                        }
+                    }
+                }
+            });
         }
 
         // Initialize charts
