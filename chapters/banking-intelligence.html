@@ -511,7 +511,7 @@
         <div class="header">
             <div class="chapter-badge">Chapter 3 of 4</div>
             <h1 class="main-title">📱 Live Banking Intelligence</h1>
-            <p class="subtitle">Experience Banking AI System's SAS AI in action. Test real credit assessments on your mobile device and explore the portfolio intelligence dashboard that transforms customer relationships.</p>
+            <p class="subtitle">Experience Banking AI System's SAS AI in action. Every chart, metric, and analysis below is powered by our 10,000 synthetic customers created in SAS Model Studio.</p>
         </div>
 
         <!-- Navigation -->
@@ -556,9 +556,13 @@
         <!-- Customer Testing Section -->
         <div class="testing-section">
             <h2 class="testing-title">🎯 Customer Scenario Testing</h2>
-            <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: 30px; font-size: 1.1rem;">
+            <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; font-size: 1.1rem;">
                 Click any customer profile to see live SAS AI risk assessment with alternative data analysis
             </p>
+            <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 10px; padding: 15px; margin-bottom: 20px; text-align: center;">
+                <div style="color: #fbbf24; font-weight: 600; margin-bottom: 5px;">🗋 SAS Data Pipeline</div>
+                <div style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem;">These customer profiles are from our SAS synthetic dataset (10,000 customers) → Processed by SAS PROC LOGISTIC → Serving live API responses</div>
+            </div>
 
             <div class="customer-scenarios">
                 <div class="scenario-card premium" onclick="testCustomer('premium')">
@@ -567,6 +571,7 @@
                         <div class="scenario-risk risk-low">Premium</div>
                     </div>
                     <div class="scenario-details">
+                        <strong>SAS Synthetic Profile #001:</strong><br>
                         Thai-Japanese executive, 42 years old<br>
                         ฿450,000 income, credit score 785<br>
                         5 Banking AI System products, investment account<br>
@@ -580,6 +585,7 @@
                         <div class="scenario-risk risk-medium">Standard</div>
                     </div>
                     <div class="scenario-details">
+                        <strong>SAS Synthetic Profile #002:</strong><br>
                         Mid-level manager, 35 years old<br>
                         ฿180,000 income, credit score 720<br>
                         2 Banking AI System products, savings only<br>
@@ -593,6 +599,7 @@
                         <div class="scenario-risk risk-high">High Risk</div>
                     </div>
                     <div class="scenario-details">
+                        <strong>SAS Synthetic Profile #003:</strong><br>
                         Recent graduate, 24 years old<br>
                         ฿95,000 income, credit score 580<br>
                         1 Banking AI System product, new customer<br>
@@ -647,31 +654,35 @@
         <!-- Portfolio Intelligence Dashboard -->
         <div class="testing-section">
             <h2 class="testing-title">📈 Banking AI System Portfolio Intelligence</h2>
+            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 15px; margin-bottom: 30px; text-align: center;">
+                <div style="color: #10b981; font-weight: 600; margin-bottom: 5px;">🎯 Powered by SAS Synthetic Data</div>
+                <div style="color: rgba(255, 255, 255, 0.9); font-size: 0.9rem;">All analytics below are generated from our 10,000 SAS synthetic banking customers, demonstrating how SAS models power real-time business intelligence</div>
+            </div>
 
             <!-- Key Metrics -->
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <span class="metric-value">15,427</span>
-                    <span class="metric-label">Active Customers</span>
-                    <div class="metric-change positive">+8.3% this month</div>
+                    <span class="metric-value">10,000</span>
+                    <span class="metric-label">SAS Synthetic Customers</span>
+                    <div class="metric-change positive">Generated in SAS Model Studio</div>
                 </div>
 
                 <div class="metric-card">
                     <span class="metric-value">₿125M</span>
-                    <span class="metric-label">Portfolio Value</span>
-                    <div class="metric-change positive">+12.1% YoY</div>
+                    <span class="metric-label">Synthetic Portfolio Value</span>
+                    <div class="metric-change positive">From SAS Customer Dataset</div>
                 </div>
 
                 <div class="metric-card">
                     <span class="metric-value">0.876</span>
-                    <span class="metric-label">Model AUC Score</span>
-                    <div class="metric-change positive">+15% vs traditional</div>
+                    <span class="metric-label">SAS Model AUC Score</span>
+                    <div class="metric-change positive">PROC LOGISTIC Output</div>
                 </div>
 
                 <div class="metric-card">
                     <span class="metric-value">72%</span>
-                    <span class="metric-label">False Positive Reduction</span>
-                    <div class="metric-change positive">+₿2.4M annual savings</div>
+                    <span class="metric-label">SAS Model Improvement</span>
+                    <div class="metric-change positive">vs Traditional Methods</div>
                 </div>
             </div>
 
@@ -679,34 +690,66 @@
             <div class="dashboard-grid">
                 <div class="dashboard-card">
                     <div class="dashboard-title">Risk Distribution Analysis</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; text-align: center; margin-bottom: 10px;">Based on 10,000 SAS Synthetic Customer Profiles</div>
                     <canvas id="riskChart"></canvas>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="dashboard-title">Alternative Data Impact</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; text-align: center; margin-bottom: 10px;">SAS Model Performance with Alternative Data Features</div>
                     <canvas id="altDataChart"></canvas>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="dashboard-title">Customer Lifetime Value</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; text-align: center; margin-bottom: 10px;">Calculated from SAS Synthetic Customer Data</div>
                     <canvas id="clvChart"></canvas>
                 </div>
 
                 <div class="dashboard-card">
                     <div class="dashboard-title">Monthly Performance Trends</div>
+                    <div style="font-size: 0.8rem; color: #fbbf24; text-align: center; margin-bottom: 10px;">SAS Model Training & Validation Results Over Time</div>
                     <canvas id="trendsChart"></canvas>
                 </div>
             </div>
         </div>
 
+        <!-- SAS Pipeline Visualization -->
+        <div style="background: rgba(16, 185, 129, 0.1); border-radius: 20px; padding: 40px; margin: 40px 0; border: 1px solid rgba(16, 185, 129, 0.3);">
+            <h2 style="color: #10b981; margin-bottom: 30px; font-size: 2rem; text-align: center;">🗋 Complete SAS → Production Pipeline</h2>
+            <div style="display: grid; grid-template-columns: 1fr 50px 1fr 50px 1fr; gap: 20px; align-items: center; margin-bottom: 30px;">
+                <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🖥️</div>
+                    <div style="color: #10b981; font-weight: 600;">SAS Model Studio</div>
+                    <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">10,000 synthetic customers<br>PROC LOGISTIC model<br>Alternative data features</div>
+                </div>
+                <div style="text-align: center; color: #fbbf24; font-size: 2rem;">→</div>
+                <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">💾</div>
+                    <div style="color: #10b981; font-weight: 600;">JSON Artifacts</div>
+                    <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">model_coefficients.json<br>deployment_config.json<br>performance_report.json</div>
+                </div>
+                <div style="text-align: center; color: #fbbf24; font-size: 2rem;">→</div>
+                <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px;">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
+                    <div style="color: #10b981; font-weight: 600;">Live Dashboard</div>
+                    <div style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">Real-time API<br>Interactive charts<br>Customer analysis</div>
+                </div>
+            </div>
+            <div style="text-align: center; background: rgba(251, 191, 36, 0.1); padding: 15px; border-radius: 10px; border: 1px solid rgba(251, 191, 36, 0.3);">
+                <div style="color: #fbbf24; font-weight: 600; margin-bottom: 5px;">🎯 The Key Message</div>
+                <div style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem;">Every visualization, metric, and analysis above comes directly from SAS synthetic data, demonstrating how we transform SAS models into production-ready business intelligence</div>
+            </div>
+        </div>
+
         <!-- Call to Action -->
         <div style="background: rgba(251, 191, 36, 0.1); border-radius: 20px; padding: 40px; margin: 40px 0; text-align: center; border: 1px solid rgba(251, 191, 36, 0.3);">
-            <h2 style="color: #fbbf24; margin-bottom: 20px; font-size: 2rem;">🚀 Ready for Banking AI System?</h2>
+            <h2 style="color: #fbbf24; margin-bottom: 20px; font-size: 2rem;">🚀 Ready for Bangkok Bank?</h2>
             <p style="font-size: 1.2rem; line-height: 1.7; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px;">
-                You've seen the SAS AI foundation, experienced the 40-second deployment, and tested the live banking intelligence. Now discover how this positions Banking AI System as Thailand's AI banking leader.
+                You've seen the SAS foundation, experienced the 40-second deployment, and tested live intelligence powered entirely by SAS synthetic data. Now discover how this transforms Bangkok Bank's SAS investment.
             </p>
             <a href="bangkok-opportunity.html" class="qr-button" style="text-decoration: none; font-size: 1.1rem; padding: 15px 30px;">
-                Explore Banking AI System Strategy →
+                See Bangkok Bank Value →
             </a>
         </div>
     </div>
