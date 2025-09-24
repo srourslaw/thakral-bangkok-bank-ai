@@ -787,16 +787,6 @@
             </div>
         </div>
 
-        <!-- API Status Display -->
-        <div class="api-status" id="apiStatus">
-            <h3>🎉 API Successfully Deployed!</h3>
-            <p>Your Banking AI System Credit Intelligence API is now live and ready for production traffic.</p>
-            <div class="api-url" id="apiUrl">
-                https://f2883b069684.ngrok-free.app/health
-            </div>
-            <button id="testApiBtn" class="test-button" onclick="testAPI()">Test Live API</button>
-            <button id="viewMetricsBtn" class="test-button" onclick="viewMetrics()">View Metrics</button>
-        </div>
 
         <!-- Next Steps QR Codes -->
         <div class="next-steps-section" id="nextStepsSection" style="display: none;">
@@ -824,14 +814,6 @@
                     <div class="qr-url-display" id="dashboardURL"></div>
                 </div>
 
-                <div class="qr-card">
-                    <div class="qr-title">📊 Live Banking Intelligence</div>
-                    <div class="qr-code" id="intelligenceQR"></div>
-                    <div class="qr-description">
-                        <strong>Interactive customer scenario testing</strong> with portfolio analytics, customer segmentation, and real-time risk assessment demonstrations.
-                    </div>
-                    <div class="qr-url-display" id="intelligenceURL"></div>
-                </div>
             </div>
 
             <div class="story-completion">
@@ -1157,12 +1139,10 @@
             // Update URL displays
             document.getElementById('mobileURL').textContent = QR_URLS.mobile;
             document.getElementById('dashboardURL').textContent = QR_URLS.dashboard;
-            document.getElementById('intelligenceURL').textContent = QR_URLS.intelligence;
 
             const qrData = [
                 { id: 'mobileQR', url: QR_URLS.mobile, label: 'Mobile Demo' },
-                { id: 'dashboardQR', url: QR_URLS.dashboard, label: 'Technical Brochure' },
-                { id: 'intelligenceQR', url: QR_URLS.intelligence, label: 'Banking Intelligence' }
+                { id: 'dashboardQR', url: QR_URLS.dashboard, label: 'Technical Brochure' }
             ];
 
             // Check if QRCode library is available
