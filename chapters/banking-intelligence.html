@@ -613,16 +613,16 @@
                 <div class="qr-title">📱 Executive Mobile Testing</div>
                 <div class="qr-code" id="mobileQR"></div>
                 <div class="qr-description">
-                    Scan with your mobile device to test Bangkok Bank's credit intelligence interface. Experience real-time risk assessments with alternative data insights.
+                    <strong>Mobile-optimized demo interface</strong> designed for executives. Test customer credit assessments on your phone with touch-friendly controls and real-time SAS AI results.
                 </div>
                 <button class="qr-button" onclick="refreshMobileQR()">Refresh QR Code</button>
             </div>
 
             <div class="qr-card">
-                <div class="qr-title">🏦 Full Banking Dashboard</div>
+                <div class="qr-title">🏦 Technical Architecture</div>
                 <div class="qr-code" id="dashboardQR"></div>
                 <div class="qr-description">
-                    Access the complete Bangkok Bank SAS intelligence dashboard. View portfolio analytics, customer segmentation, and business impact metrics.
+                    <strong>Complete technical architecture brochure</strong> with SAS integration details, model performance metrics, deployment architecture, and full technical specifications for IT teams.
                 </div>
                 <button class="qr-button" onclick="refreshDashboardQR()">Refresh QR Code</button>
             </div>
@@ -798,8 +798,8 @@
     <script>
         // API Base URL (for demo purposes - real API would be different)
         const API_BASE = 'https://f2883b069684.ngrok-free.app';
-        const MOBILE_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/chapters/banking-intelligence.html';
-        const DASHBOARD_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/';
+        const MOBILE_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/mobile-demo.html';
+        const DASHBOARD_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/technical-brochure.html';
         const API_DOCS_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/chapters/deployment-pipeline.html';
 
         // Customer data for testing
@@ -927,8 +927,8 @@
             console.log('Using Google Charts API for QR codes');
 
             const qrData = [
-                { id: 'mobileQR', url: MOBILE_URL, label: 'Mobile Testing' },
-                { id: 'dashboardQR', url: DASHBOARD_URL, label: 'Dashboard' },
+                { id: 'mobileQR', url: MOBILE_URL, label: 'Mobile Demo' },
+                { id: 'dashboardQR', url: DASHBOARD_URL, label: 'Technical Brochure' },
                 { id: 'apiQR', url: API_DOCS_URL, label: 'API Documentation' }
             ];
 
