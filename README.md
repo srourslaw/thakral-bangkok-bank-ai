@@ -1,0 +1,1 @@
+# thakral-bangkok-bank-ai
