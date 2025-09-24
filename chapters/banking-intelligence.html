@@ -856,35 +856,69 @@
 
         // Generate QR Codes
         function generateQRCodes() {
-            // Mobile QR
-            QRCode.toCanvas(document.getElementById('mobileQR'), MOBILE_URL, {
-                width: 180,
-                margin: 2,
-                color: {
-                    dark: '#1e293b',
-                    light: '#ffffff'
-                }
-            });
+            try {
+                console.log('Generating QR codes...');
 
-            // Dashboard QR
-            QRCode.toCanvas(document.getElementById('dashboardQR'), DASHBOARD_URL, {
-                width: 180,
-                margin: 2,
-                color: {
-                    dark: '#1e293b',
-                    light: '#ffffff'
-                }
-            });
+                // Helper function to create QR code
+                function createQRCode(elementId, url, label) {
+                    const element = document.getElementById(elementId);
+                    if (!element) {
+                        console.error(`Element ${elementId} not found`);
+                        return;
+                    }
 
-            // API QR
-            QRCode.toCanvas(document.getElementById('apiQR'), API_DOCS_URL, {
-                width: 180,
-                margin: 2,
-                color: {
-                    dark: '#1e293b',
-                    light: '#ffffff'
+                    element.innerHTML = `<p style="color: #ffd700; text-align: center;">Generating ${label}...</p>`;
+
+                    // Try canvas first, fallback to data URL
+                    QRCode.toDataURL(url, {
+                        width: 180,
+                        margin: 2,
+                        color: {
+                            dark: '#1e293b',
+                            light: '#ffffff'
+                        }
+                    }, function (error, dataUrl) {
+                        if (error) {
+                            console.error(`${label} QR Error:`, error);
+                            element.innerHTML = `
+                                <div style="background: #1e293b; color: white; padding: 20px; border-radius: 8px; text-align: center;">
+                                    <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
+                                    <div style="font-size: 14px;">${label}</div>
+                                    <div style="font-size: 12px; margin-top: 5px; word-break: break-all;">${url}</div>
+                                </div>
+                            `;
+                        } else {
+                            element.innerHTML = `<img src="${dataUrl}" style="max-width: 180px; border-radius: 8px;" alt="${label} QR Code" />`;
+                            console.log(`${label} QR generated successfully`);
+                        }
+                    });
                 }
-            });
+
+                // Generate all QR codes
+                createQRCode('mobileQR', MOBILE_URL, 'Mobile Testing QR');
+                createQRCode('dashboardQR', DASHBOARD_URL, 'Dashboard QR');
+                createQRCode('apiQR', API_DOCS_URL, 'API Documentation QR');
+
+            } catch (error) {
+                console.error('QR Code generation failed:', error);
+                // Fallback for all elements
+                const elements = ['mobileQR', 'dashboardQR', 'apiQR'];
+                const urls = [MOBILE_URL, DASHBOARD_URL, API_DOCS_URL];
+                const labels = ['Mobile Testing', 'Dashboard', 'API Docs'];
+
+                elements.forEach((id, index) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.innerHTML = `
+                            <div style="background: #1e293b; color: white; padding: 20px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
+                                <div style="font-size: 14px;">${labels[index]}</div>
+                                <div style="font-size: 12px; margin-top: 5px; word-break: break-all;">${urls[index]}</div>
+                            </div>
+                        `;
+                    }
+                });
+            }
         }
 
         // Test customer scenarios
@@ -1236,12 +1270,15 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            generateQRCodes();
-            initializeCharts();
-            checkAPIStatus();
+            // Add a small delay to ensure QRCode library is fully loaded
+            setTimeout(() => {
+                generateQRCodes();
+                initializeCharts();
+                checkAPIStatus();
 
-            // Refresh API status every 30 seconds
-            setInterval(checkAPIStatus, 30000);
+                // Refresh API status every 30 seconds
+                setInterval(checkAPIStatus, 30000);
+            }, 500);
         });
 
         // Track page view
