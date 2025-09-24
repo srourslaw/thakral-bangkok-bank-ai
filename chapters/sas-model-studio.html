@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🧠 Chapter 1: SAS AI Foundation - Bangkok Bank Transformation</title>
+    <title>🧠 Act I: SAS Model Studio - Banking AI System Demo</title>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBJXW5MP12"></script>
@@ -228,6 +228,191 @@
             border-left: 4px solid #fbbf24;
             font-family: 'Courier New', monospace;
             overflow-x: auto;
+        }
+
+        /* New SAS Visual Workspace */
+        .sas-visual-workspace {
+            background: #0f172a;
+            border-radius: 15px;
+            border: 2px solid #fbbf24;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+
+        .sas-visual-workspace .sas-header {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e293b;
+            padding: 15px 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sas-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .sas-icon {
+            font-size: 1.5rem;
+        }
+
+        .workspace-path {
+            font-family: monospace;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .workspace-layout {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .pc-section, .code-visual, .output-visual {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .pc-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .pc-details {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .code-header, .output-header {
+            background: rgba(251, 191, 36, 0.2);
+            margin: -20px -20px 15px -20px;
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .file-tab, .output-tab {
+            font-size: 0.9rem;
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .code-preview {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .code-line {
+            margin-bottom: 5px;
+        }
+
+        .indent { padding-left: 20px; }
+        .indent2 { padding-left: 40px; }
+
+        .keyword { color: #10b981; font-weight: bold; }
+        .variable { color: #fbbf24; }
+        .comment { color: #6b7280; font-style: italic; }
+
+        .output-preview {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .output-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+
+        .metric-label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .metric-value {
+            color: white;
+            font-weight: 600;
+        }
+
+        .metric-value.success {
+            color: #10b981;
+        }
+
+        .artifacts-section {
+            padding: 0 25px 25px 25px;
+            border-top: 1px solid rgba(251, 191, 36, 0.3);
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .artifacts-section h3 {
+            color: #fbbf24;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .artifacts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .artifact-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .artifact-card:hover {
+            border-color: #fbbf24;
+            transform: translateY(-2px);
+        }
+
+        .artifact-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .artifact-name {
+            color: #fbbf24;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-family: monospace;
+        }
+
+        .artifact-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .workspace-layout {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .artifacts-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
         }
 
         /* Interactive Features */
@@ -535,7 +720,7 @@
         <!-- Navigation -->
         <div class="navigation-bar">
             <div class="breadcrumb">
-                <a href="../index.html">Bangkok Bank Dashboard</a>
+                <a href="../index.html">Banking AI System Dashboard</a>
                 <span>→</span>
                 <span>SAS AI Foundation</span>
             </div>
@@ -547,12 +732,12 @@
         <!-- The Story -->
         <div class="story-section">
             <h2 class="story-title">
-                🏦 The Bangkok Bank Challenge
+                🏦 The Banking AI System Challenge
             </h2>
             <div class="story-content">
-                <p>Bangkok Bank's data scientists are brilliant. They build sophisticated credit risk models, analyze customer behavior, and uncover insights that could transform Thai banking. But here's the problem: <span class="highlight">these world-class models sit trapped in spreadsheets and reports</span>, taking 4-6 weeks to reach customers.</p>
+                <p>Banking AI System's data scientists are brilliant. They build sophisticated credit risk models, analyze customer behavior, and uncover insights that could transform Thai banking. But here's the problem: <span class="highlight">these world-class models sit trapped in spreadsheets and reports</span>, taking 4-6 weeks to reach customers.</p>
 
-                <p>While competitors rush to deploy basic AI, Bangkok Bank has the opportunity to leapfrog them with <span class="highlight">SAS-powered intelligent banking</span> - but only if they can bridge the gap between analytics excellence and customer experience.</p>
+                <p>While competitors rush to deploy basic AI, Banking AI System has the opportunity to leapfrog them with <span class="highlight">SAS-powered intelligent banking</span> - but only if they can bridge the gap between analytics excellence and customer experience.</p>
             </div>
 
             <div class="ai-insight">
@@ -567,48 +752,83 @@
 
         <!-- SAS Model Studio Simulation -->
         <div class="sas-workspace">
-            <div class="sas-header">
-                <span>🖥️ SAS Model Studio - Bangkok Bank Credit Risk Laboratory</span>
-                <span style="margin-left: auto; font-size: 0.9rem;">C:\SAS_Event_Demo</span>
-            </div>
-            <div class="sas-content">
-                <div class="code-block">
-<pre><code class="language-sas">/* Bangkok Bank Enterprise Credit Risk Model */
-/* Advanced logistic regression with alternative data integration */
-
-%let demo_root = C:\SAS_Event_Demo;
-
-/* Load Bangkok Bank customer portfolio */
-proc import datafile="&demo_root.\model_artifacts\training_data.csv"
-    out=work.bangkok_customers
-    dbms=csv replace;
-run;
-
-/* Build comprehensive credit risk model */
-proc logistic data=work.bangkok_customers outmodel=work.credit_intelligence;
-    model DefaultRisk(event='1') =
-        /* Traditional Bangkok Bank features */
-        Income Age LoanAmount CreditScore DebtToIncome EmploymentYears
-
-        /* Alternative data intelligence */
-        SocialMediaRiskScore DeviceUsageScore
-
-        /* Customer relationship depth */
-        NumberOfProducts HasInvestmentAccount AccountTenure
-
-        /* Behavioral indicators */
-        LatePayments OverdraftEvents TransactionFrequency;
-
-    output out=work.scored_customers p=risk_probability;
-run;</code></pre>
+            <!-- SAS Visual Workspace -->
+            <div class="sas-visual-workspace">
+                <div class="sas-header">
+                    <div class="sas-logo">
+                        <div class="sas-icon">🗋</div>
+                        <span>SAS Model Studio</span>
+                    </div>
+                    <div class="workspace-path">C:\SAS_Event_Demo\Banking_AI_Lab</div>
                 </div>
 
-                <div class="ai-insight">
-                    <div class="ai-insight-title">
-                        🎯 What Makes This Different
+                <div class="workspace-layout">
+                    <!-- PC Setup -->
+                    <div class="pc-section">
+                        <div class="pc-icon">🖥️</div>
+                        <div class="pc-details">
+                            <strong>Enterprise PC Setup</strong><br>
+                            <span>SAS 9.4 M7 Enterprise</span><br>
+                            <span>16GB RAM, Multi-core Processing</span>
+                        </div>
                     </div>
-                    <div class="ai-insight-content">
-                        This isn't just another credit score. It's <strong>Bangkok Bank's competitive advantage</strong> - combining traditional Thai banking expertise with cutting-edge alternative data sources that international banks can't access.
+
+                    <!-- SAS Code Visual -->
+                    <div class="code-visual">
+                        <div class="code-header">
+                            <div class="file-tab active">📋 build_credit_model.sas</div>
+                        </div>
+                        <div class="code-preview">
+                            <div class="code-line"><span class="comment">/* Banking AI System - 10,000 Synthetic Customers */</span></div>
+                            <div class="code-line"><span class="keyword">proc logistic</span> <span class="variable">data=banking_customers</span>;</div>
+                            <div class="code-line indent"><span class="keyword">model</span> DefaultRisk = Income Age CreditScore</div>
+                            <div class="code-line indent2"><span class="comment">/* Alternative Data Features */</span></div>
+                            <div class="code-line indent2">SocialMediaRiskScore DeviceUsageScore;</div>
+                            <div class="code-line"><span class="keyword">run;</span></div>
+                        </div>
+                    </div>
+
+                    <!-- SAS Output Visual -->
+                    <div class="output-visual">
+                        <div class="output-header">
+                            <div class="output-tab">📈 Model Results</div>
+                        </div>
+                        <div class="output-preview">
+                            <div class="output-metric">
+                                <span class="metric-label">AUC Score:</span>
+                                <span class="metric-value success">0.876</span>
+                            </div>
+                            <div class="output-metric">
+                                <span class="metric-label">Customers Processed:</span>
+                                <span class="metric-value">10,000</span>
+                            </div>
+                            <div class="output-metric">
+                                <span class="metric-label">Model Status:</span>
+                                <span class="metric-value success">✓ Ready for Production</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3 Critical Artifacts Generated -->
+                <div class="artifacts-section">
+                    <h3>🎯 3 Critical Artifacts Generated</h3>
+                    <div class="artifacts-grid">
+                        <div class="artifact-card brain">
+                            <div class="artifact-icon">🧠</div>
+                            <div class="artifact-name">model_coefficients.json</div>
+                            <div class="artifact-desc">The "Brain" - Mathematical DNA for production API</div>
+                        </div>
+                        <div class="artifact-card manual">
+                            <div class="artifact-icon">📜</div>
+                            <div class="artifact-name">deployment_config.json</div>
+                            <div class="artifact-desc">The "User Manual" - Business rules & governance</div>
+                        </div>
+                        <div class="artifact-card report">
+                            <div class="artifact-icon">📅</div>
+                            <div class="artifact-name">model_performance_report.json</div>
+                            <div class="artifact-desc">The "Report Card" - Accuracy metrics for auditors</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -634,7 +854,7 @@ run;</code></pre>
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
                     <div class="feature-title">Real-Time Learning</div>
-                    <div class="feature-description">Models continuously learn from payment behaviors, account usage, and market changes specific to Bangkok Bank's customer base.</div>
+                    <div class="feature-description">Models continuously learn from payment behaviors, account usage, and market changes specific to Banking AI System's customer base.</div>
                 </div>
 
                 <div class="feature-card">
@@ -653,7 +873,7 @@ run;</code></pre>
 
         <!-- Dashboard Panels -->
         <div id="modelOutputPanel" class="dashboard-panel">
-            <div class="panel-header">🏦 Bangkok Bank Credit Intelligence - Live Model Output</div>
+            <div class="panel-header">🏦 Banking AI System Credit Intelligence - Live Model Output</div>
             <div class="metrics-grid">
                 <div class="metric-card">
                     <div class="metric-value">87.6%</div>
@@ -683,7 +903,7 @@ run;</code></pre>
             <div class="insight-box">
                 <div class="insight-title">💡 Business Impact Analysis</div>
                 <div class="insight-content">
-                    The Bangkok Bank AI model delivers <strong>฿2.4M annual savings</strong> through 72% false positive reduction and 58% faster decision processing. Alternative data integration provides 15.2% accuracy improvement specifically for Thai millennial customers.
+                    The Banking AI System AI model delivers <strong>฿2.4M annual savings</strong> through 72% false positive reduction and 58% faster decision processing. Alternative data integration provides 15.2% accuracy improvement specifically for Thai millennial customers.
                 </div>
             </div>
             <div class="technical-details">
@@ -723,7 +943,7 @@ run;</code></pre>
             <div class="insight-box">
                 <div class="insight-title">📊 Performance Benchmark</div>
                 <div class="insight-content">
-                    Bangkok Bank's model outperforms industry benchmarks by <strong>14.2% on average</strong> across all metrics. Particularly strong in precision (92.3% vs 78.5% industry) and recall (94.2% vs 82.1% industry).
+                    Banking AI System's model outperforms industry benchmarks by <strong>14.2% on average</strong> across all metrics. Particularly strong in precision (92.3% vs 78.5% industry) and recall (94.2% vs 82.1% industry).
                 </div>
             </div>
             <div class="technical-details">
@@ -763,7 +983,7 @@ run;</code></pre>
             <div class="insight-box">
                 <div class="insight-title">🎯 Alternative Data Advantage</div>
                 <div class="insight-content">
-                    Social media risk scoring contributes <strong>18% to credit decisions</strong>, while device usage patterns add 10%. This alternative data advantage is unique to Bangkok Bank's Thai market positioning.
+                    Social media risk scoring contributes <strong>18% to credit decisions</strong>, while device usage patterns add 10%. This alternative data advantage is unique to Banking AI System's Thai market positioning.
                 </div>
             </div>
             <div class="technical-details">
@@ -798,7 +1018,7 @@ run;</code></pre>
         <!-- Model Output Display -->
         <div id="modelOutputSection" class="sas-workspace" style="display: none;">
             <div class="sas-header">
-                <span>📈 Live Model Output - Bangkok Bank Credit Intelligence</span>
+                <span>📈 Live Model Output - Banking AI System Credit Intelligence</span>
             </div>
             <div class="sas-content">
                 <pre id="modelOutput" class="code-block"></pre>
@@ -811,17 +1031,17 @@ run;</code></pre>
                 ⚡ What Happens Next?
             </h2>
             <div class="story-content">
-                <p>Your SAS models are sophisticated, but they're just the beginning. The real Bangkok Bank advantage comes from <span class="highlight">deploying this intelligence in 40 seconds instead of 40 days</span>.</p>
+                <p>Your SAS models are sophisticated, but they're just the beginning. The real Banking AI System advantage comes from <span class="highlight">deploying this intelligence in 40 seconds instead of 40 days</span>.</p>
 
                 <p>In Chapter 2, watch how we transform your SAS expertise into production-ready AI systems with automated CI/CD pipelines, containerized deployment, and real-time API serving.</p>
             </div>
 
             <div class="ai-insight">
                 <div class="ai-insight-title">
-                    🎯 Bangkok Bank Advantage
+                    🎯 Banking AI System Advantage
                 </div>
                 <div class="ai-insight-content">
-                    While other Thai banks struggle with basic AI deployment, <strong>Bangkok Bank leaps ahead</strong> by combining SAS analytical excellence with modern deployment automation - the best of both worlds.
+                    While other Thai banks struggle with basic AI deployment, <strong>Banking AI System leaps ahead</strong> by combining SAS analytical excellence with modern deployment automation - the best of both worlds.
                 </div>
             </div>
         </div>
@@ -849,7 +1069,7 @@ run;</code></pre>
                 data: {
                     labels: Array.from({length: 11}, (_, i) => (i / 10).toFixed(1)),
                     datasets: [{
-                        label: 'Bangkok Bank Model (AUC: 0.876)',
+                        label: 'Banking AI System Model (AUC: 0.876)',
                         data: [0, 0.15, 0.35, 0.52, 0.68, 0.78, 0.85, 0.90, 0.94, 0.97, 1.0],
                         borderColor: '#fbbf24',
                         backgroundColor: 'rgba(251, 191, 36, 0.1)',
@@ -1077,7 +1297,7 @@ run;</code></pre>
                         legend: { labels: { color: 'white', font: { size: 14 } } },
                         title: {
                             display: true,
-                            text: 'Bangkok Bank AI Model Performance Evolution',
+                            text: 'Banking AI System AI Model Performance Evolution',
                             color: 'white',
                             font: { size: 16, weight: 'bold' }
                         }
@@ -1110,7 +1330,7 @@ run;</code></pre>
                 data: {
                     labels: ['Precision', 'Recall', 'F1-Score', 'Specificity', 'Sensitivity', 'AUC-ROC'],
                     datasets: [{
-                        label: 'Bangkok Bank Model',
+                        label: 'Banking AI System Model',
                         data: [92.3, 94.2, 96.1, 89.7, 94.2, 89.1],
                         borderColor: '#ffd700',
                         backgroundColor: 'rgba(255, 215, 0, 0.2)',
