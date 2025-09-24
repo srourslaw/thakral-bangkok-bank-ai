@@ -298,6 +298,11 @@
             border-radius: 15px;
             padding: 25px;
             border: 1px solid rgba(251, 191, 36, 0.2);
+            min-height: 400px;
+        }
+
+        .chart-container canvas {
+            max-height: 350px;
         }
 
         .chart-title {
@@ -641,7 +646,7 @@ run;</code></pre>
             // Feature Importance Chart
             const featureCtx = document.getElementById('featureChart').getContext('2d');
             new Chart(featureCtx, {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: {
                     labels: ['Credit Score', 'Debt-to-Income', 'Social Media Risk', 'Income', 'Employment Years', 'Age', 'Alternative Data'],
                     datasets: [{
@@ -653,6 +658,7 @@ run;</code></pre>
                     }]
                 },
                 options: {
+                    indexAxis: 'y',
                     responsive: true,
                     plugins: {
                         legend: { display: false }
@@ -787,9 +793,25 @@ run;</code></pre>
             alert('Top Features: Credit Score (28%), Debt-to-Income (24%), Social Media Risk (18%), Alternative Data providing 15% accuracy lift');
         }
 
-        // Initialize on page load
+        // Initialize on page load with error handling
         document.addEventListener('DOMContentLoaded', function() {
-            initializeCharts();
+            // Add delay to ensure DOM is fully ready
+            setTimeout(() => {
+                try {
+                    initializeCharts();
+                    console.log('Charts initialized successfully');
+                } catch (error) {
+                    console.error('Chart initialization error:', error);
+                    // Retry once after another delay
+                    setTimeout(() => {
+                        try {
+                            initializeCharts();
+                        } catch (retryError) {
+                            console.error('Chart retry failed:', retryError);
+                        }
+                    }, 1000);
+                }
+            }, 500);
         });
     </script>
 </body>
