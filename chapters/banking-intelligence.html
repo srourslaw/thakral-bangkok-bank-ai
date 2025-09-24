@@ -15,7 +15,6 @@
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
     <style>
         * {
@@ -190,67 +189,6 @@
             50% { opacity: 0.5; transform: scale(1.2); }
         }
 
-        /* QR Code Section */
-        .qr-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .qr-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .qr-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
-            border-color: #10b981;
-        }
-
-        .qr-title {
-            font-size: 1.3rem;
-            color: #10b981;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .qr-code {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            display: inline-block;
-        }
-
-        .qr-description {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .qr-button {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 5px;
-        }
-
-        .qr-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-        }
 
         /* Customer Testing Section */
         .testing-section {
@@ -607,35 +545,7 @@
             </div>
         </div>
 
-        <!-- QR Code Section -->
-        <div class="qr-section">
-            <div class="qr-card">
-                <div class="qr-title">📱 Executive Mobile Testing</div>
-                <div class="qr-code" id="mobileQR"></div>
-                <div class="qr-description">
-                    <strong>Mobile-optimized demo interface</strong> designed for executives. Test customer credit assessments on your phone with touch-friendly controls and real-time SAS AI results.
-                </div>
-                <button class="qr-button" onclick="refreshMobileQR()">Refresh QR Code</button>
-            </div>
-
-            <div class="qr-card">
-                <div class="qr-title">🏦 Technical Architecture</div>
-                <div class="qr-code" id="dashboardQR"></div>
-                <div class="qr-description">
-                    <strong>Complete technical architecture brochure</strong> with SAS integration details, model performance metrics, deployment architecture, and full technical specifications for IT teams.
-                </div>
-                <button class="qr-button" onclick="refreshDashboardQR()">Refresh QR Code</button>
-            </div>
-
-            <div class="qr-card">
-                <div class="qr-title">📊 API Documentation</div>
-                <div class="qr-code" id="apiQR"></div>
-                <div class="qr-description">
-                    Technical documentation for Bangkok Bank's credit API. Explore endpoints, authentication, response formats, and integration examples.
-                </div>
-                <button class="qr-button" onclick="refreshAPIQR()">Refresh QR Code</button>
-            </div>
-        </div>
+        <!-- QR codes appear after deployment demo in Chapter 2 -->
 
         <!-- Customer Testing Section -->
         <div class="testing-section">
@@ -798,9 +708,6 @@
     <script>
         // API Base URL (for demo purposes - real API would be different)
         const API_BASE = 'https://f2883b069684.ngrok-free.app';
-        const MOBILE_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/mobile-demo.html';
-        const DASHBOARD_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/technical-brochure.html';
-        const API_DOCS_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/chapters/deployment-pipeline.html';
 
         // Customer data for testing
         const customerData = {
@@ -854,108 +761,6 @@
             }
         };
 
-        // Generate QR Codes
-        function generateQRCodes() {
-            console.log('Starting QR code generation...');
-
-            // Check if QRCode library is loaded
-            if (typeof QRCode === 'undefined') {
-                console.error('QRCode library not loaded, using Google Charts API instead');
-                generateQRWithGoogleCharts();
-                return;
-            }
-
-            try {
-                // Helper function to create QR code
-                function createQRCode(elementId, url, label) {
-                    const element = document.getElementById(elementId);
-                    if (!element) {
-                        console.error(`Element ${elementId} not found`);
-                        return;
-                    }
-
-                    console.log(`Generating QR for ${label}: ${url}`);
-                    element.innerHTML = `<div style="text-align: center; color: #ffd700;">Loading QR Code...</div>`;
-
-                    // Create a canvas element
-                    const canvas = document.createElement('canvas');
-                    element.appendChild(canvas);
-
-                    QRCode.toCanvas(canvas, url, {
-                        width: 180,
-                        margin: 2,
-                        color: {
-                            dark: '#1e293b',
-                            light: '#ffffff'
-                        }
-                    }, function (error) {
-                        if (error) {
-                            console.error(`${label} QR Error:`, error);
-                            // Remove the loading text and canvas
-                            element.innerHTML = '';
-                            // Use Google Charts API as fallback
-                            const img = document.createElement('img');
-                            img.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`;
-                            img.style.borderRadius = '8px';
-                            img.alt = `${label} QR Code`;
-                            element.appendChild(img);
-                            console.log(`${label} QR generated with API fallback`);
-                        } else {
-                            // Remove loading text, keep canvas
-                            const loadingText = element.querySelector('div');
-                            if (loadingText) {
-                                loadingText.remove();
-                            }
-                            console.log(`${label} QR generated successfully`);
-                        }
-                    });
-                }
-
-                // Generate all QR codes
-                createQRCode('mobileQR', MOBILE_URL, 'Mobile Testing');
-                createQRCode('dashboardQR', DASHBOARD_URL, 'Dashboard');
-                createQRCode('apiQR', API_DOCS_URL, 'API Documentation');
-
-            } catch (error) {
-                console.error('QRCode library failed:', error);
-                generateQRWithGoogleCharts();
-            }
-        }
-
-        // Fallback QR generation using Google Charts API
-        function generateQRWithGoogleCharts() {
-            console.log('Using Google Charts API for QR codes');
-
-            const qrData = [
-                { id: 'mobileQR', url: MOBILE_URL, label: 'Mobile Demo' },
-                { id: 'dashboardQR', url: DASHBOARD_URL, label: 'Technical Brochure' },
-                { id: 'apiQR', url: API_DOCS_URL, label: 'API Documentation' }
-            ];
-
-            qrData.forEach(({ id, url, label }) => {
-                const element = document.getElementById(id);
-                if (element) {
-                    const img = document.createElement('img');
-                    img.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(url)}`;
-                    img.style.borderRadius = '8px';
-                    img.style.maxWidth = '180px';
-                    img.alt = `${label} QR Code`;
-                    img.onload = () => console.log(`${label} QR loaded successfully`);
-                    img.onerror = () => {
-                        console.error(`${label} QR failed to load`);
-                        element.innerHTML = `
-                            <div style="background: #1e293b; color: white; padding: 20px; border-radius: 8px; text-align: center; cursor: pointer;" onclick="window.open('${url}', '_blank')">
-                                <div style="font-size: 48px; margin-bottom: 10px;">📱</div>
-                                <div style="font-size: 14px; margin-bottom: 10px;">${label}</div>
-                                <div style="font-size: 10px; color: #ffd700;">Click to open</div>
-                            </div>
-                        `;
-                    };
-                    element.innerHTML = '';
-                    element.appendChild(img);
-                }
-            });
-        }
 
         // Test customer scenarios
         function testCustomer(type) {
@@ -1279,18 +1084,6 @@
             });
         }
 
-        // QR Code refresh functions
-        function refreshMobileQR() {
-            generateQRCodes();
-        }
-
-        function refreshDashboardQR() {
-            generateQRCodes();
-        }
-
-        function refreshAPIQR() {
-            generateQRCodes();
-        }
 
         // Check API status
         function checkAPIStatus() {
@@ -1313,28 +1106,6 @@
             checkAPIStatus();
             setInterval(checkAPIStatus, 30000);
 
-            // Try QR generation with multiple attempts
-            let attempts = 0;
-            const maxAttempts = 3;
-
-            function tryGenerateQR() {
-                attempts++;
-                console.log(`QR generation attempt ${attempts}`);
-
-                if (typeof QRCode !== 'undefined') {
-                    console.log('QRCode library found, generating QR codes...');
-                    generateQRCodes();
-                } else if (attempts < maxAttempts) {
-                    console.log(`QRCode library not ready, retrying in ${attempts * 500}ms...`);
-                    setTimeout(tryGenerateQR, attempts * 500);
-                } else {
-                    console.log('QRCode library failed to load, using API fallback');
-                    generateQRWithGoogleCharts();
-                }
-            }
-
-            // Start QR generation attempts
-            setTimeout(tryGenerateQR, 100);
         });
 
         // Track page view
