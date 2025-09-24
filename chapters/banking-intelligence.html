@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 Chapter 3: Live Banking Intelligence - Bangkok Bank Transformation</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WBJXW5MP12"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WBJXW5MP12');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #000814 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Back Button */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e293b;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .chapter-badge {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #10b981, #059669, #fbbf24);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s ease infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 900px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navigation-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin: 40px 0;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #fbbf24;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e293b;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Live API Status */
+        .api-status {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid rgba(16, 185, 129, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .qr-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .qr-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.2);
+            border-color: #10b981;
+        }
+
+        .qr-title {
+            font-size: 1.3rem;
+            color: #10b981;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .qr-code {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .qr-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .qr-button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .qr-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Customer Testing Section */
+        .testing-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .testing-title {
+            font-size: 2.2rem;
+            color: #fbbf24;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .customer-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .scenario-card.premium {
+            border-left-color: #10b981;
+        }
+
+        .scenario-card.standard {
+            border-left-color: #fbbf24;
+        }
+
+        .scenario-card.high-risk {
+            border-left-color: #ef4444;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .scenario-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .scenario-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .scenario-risk {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .risk-low {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .risk-medium {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .risk-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .scenario-details {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        /* Portfolio Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .dashboard-title {
+            font-size: 1.4rem;
+            color: #fbbf24;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Metrics Cards */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #10b981;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-change {
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .metric-change.positive {
+            color: #10b981;
+        }
+
+        .metric-change.negative {
+            color: #ef4444;
+        }
+
+        /* API Response Display */
+        .api-response {
+            background: #0f172a;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #10b981;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #10b981;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .qr-section {
+                grid-template-columns: 1fr;
+            }
+
+            .customer-scenarios {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-button">
+        ← Back to Dashboard
+    </a>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="chapter-badge">Chapter 3 of 4</div>
+            <h1 class="main-title">📱 Live Banking Intelligence</h1>
+            <p class="subtitle">Experience Bangkok Bank's SAS AI in action. Test real credit assessments on your mobile device and explore the portfolio intelligence dashboard that transforms customer relationships.</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation-bar">
+            <div class="breadcrumb">
+                <a href="../index.html">Bangkok Bank Dashboard</a>
+                <span>→</span>
+                <a href="deployment-pipeline.html">40s Pipeline</a>
+                <span>→</span>
+                <span>Live Banking Intelligence</span>
+            </div>
+            <div class="nav-buttons">
+                <a href="deployment-pipeline.html" class="nav-btn">← Previous</a>
+                <a href="bangkok-opportunity.html" class="nav-btn">Next: Thailand Strategy →</a>
+            </div>
+        </div>
+
+        <!-- Live API Status -->
+        <div class="api-status">
+            <div class="status-indicator">
+                <div class="pulse-dot"></div>
+                <span id="apiStatusText">🟢 Bangkok Bank Credit API - LIVE</span>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 20px;">
+                Real-time credit intelligence powered by SAS Model Studio with alternative data integration
+            </p>
+            <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <span style="background: rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">
+                    ⚡ <100ms Response Time
+                </span>
+                <span style="background: rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">
+                    🔄 Real-time Processing
+                </span>
+                <span style="background: rgba(255, 255, 255, 0.1); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;">
+                    📊 Alternative Data Enabled
+                </span>
+            </div>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="qr-section">
+            <div class="qr-card">
+                <div class="qr-title">📱 Executive Mobile Testing</div>
+                <div class="qr-code" id="mobileQR"></div>
+                <div class="qr-description">
+                    Scan with your mobile device to test Bangkok Bank's credit intelligence interface. Experience real-time risk assessments with alternative data insights.
+                </div>
+                <button class="qr-button" onclick="refreshMobileQR()">Refresh QR Code</button>
+            </div>
+
+            <div class="qr-card">
+                <div class="qr-title">🏦 Full Banking Dashboard</div>
+                <div class="qr-code" id="dashboardQR"></div>
+                <div class="qr-description">
+                    Access the complete Bangkok Bank SAS intelligence dashboard. View portfolio analytics, customer segmentation, and business impact metrics.
+                </div>
+                <button class="qr-button" onclick="refreshDashboardQR()">Refresh QR Code</button>
+            </div>
+
+            <div class="qr-card">
+                <div class="qr-title">📊 API Documentation</div>
+                <div class="qr-code" id="apiQR"></div>
+                <div class="qr-description">
+                    Technical documentation for Bangkok Bank's credit API. Explore endpoints, authentication, response formats, and integration examples.
+                </div>
+                <button class="qr-button" onclick="refreshAPIQR()">Refresh QR Code</button>
+            </div>
+        </div>
+
+        <!-- Customer Testing Section -->
+        <div class="testing-section">
+            <h2 class="testing-title">🎯 Customer Scenario Testing</h2>
+            <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: 30px; font-size: 1.1rem;">
+                Click any customer profile to see live SAS AI risk assessment with alternative data analysis
+            </p>
+
+            <div class="customer-scenarios">
+                <div class="scenario-card premium" onclick="testCustomer('premium')">
+                    <div class="scenario-header">
+                        <div class="scenario-name">Siriporn Tanaka</div>
+                        <div class="scenario-risk risk-low">Premium</div>
+                    </div>
+                    <div class="scenario-details">
+                        Thai-Japanese executive, 42 years old<br>
+                        ฿450,000 income, credit score 785<br>
+                        5 Bangkok Bank products, investment account<br>
+                        Low social media risk, high device usage
+                    </div>
+                </div>
+
+                <div class="scenario-card standard" onclick="testCustomer('standard')">
+                    <div class="scenario-header">
+                        <div class="scenario-name">Somchai Pattana</div>
+                        <div class="scenario-risk risk-medium">Standard</div>
+                    </div>
+                    <div class="scenario-details">
+                        Mid-level manager, 35 years old<br>
+                        ฿180,000 income, credit score 720<br>
+                        2 Bangkok Bank products, savings only<br>
+                        Medium social media risk, good employment
+                    </div>
+                </div>
+
+                <div class="scenario-card high-risk" onclick="testCustomer('highrisk')">
+                    <div class="scenario-header">
+                        <div class="scenario-name">Niran Sukumvit</div>
+                        <div class="scenario-risk risk-high">High Risk</div>
+                    </div>
+                    <div class="scenario-details">
+                        Recent graduate, 24 years old<br>
+                        ฿95,000 income, credit score 580<br>
+                        1 Bangkok Bank product, new customer<br>
+                        High debt-to-income, limited history
+                    </div>
+                </div>
+            </div>
+
+            <div id="apiResponse" class="api-response" style="display: none;"></div>
+        </div>
+
+        <!-- Portfolio Intelligence Dashboard -->
+        <div class="testing-section">
+            <h2 class="testing-title">📈 Bangkok Bank Portfolio Intelligence</h2>
+
+            <!-- Key Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-value">15,427</span>
+                    <span class="metric-label">Active Customers</span>
+                    <div class="metric-change positive">+8.3% this month</div>
+                </div>
+
+                <div class="metric-card">
+                    <span class="metric-value">₿125M</span>
+                    <span class="metric-label">Portfolio Value</span>
+                    <div class="metric-change positive">+12.1% YoY</div>
+                </div>
+
+                <div class="metric-card">
+                    <span class="metric-value">0.876</span>
+                    <span class="metric-label">Model AUC Score</span>
+                    <div class="metric-change positive">+15% vs traditional</div>
+                </div>
+
+                <div class="metric-card">
+                    <span class="metric-value">72%</span>
+                    <span class="metric-label">False Positive Reduction</span>
+                    <div class="metric-change positive">+₿2.4M annual savings</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Charts -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="dashboard-title">Risk Distribution Analysis</div>
+                    <canvas id="riskChart"></canvas>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="dashboard-title">Alternative Data Impact</div>
+                    <canvas id="altDataChart"></canvas>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="dashboard-title">Customer Lifetime Value</div>
+                    <canvas id="clvChart"></canvas>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="dashboard-title">Monthly Performance Trends</div>
+                    <canvas id="trendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div style="background: rgba(251, 191, 36, 0.1); border-radius: 20px; padding: 40px; margin: 40px 0; text-align: center; border: 1px solid rgba(251, 191, 36, 0.3);">
+            <h2 style="color: #fbbf24; margin-bottom: 20px; font-size: 2rem;">🚀 Ready for Bangkok Bank?</h2>
+            <p style="font-size: 1.2rem; line-height: 1.7; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px;">
+                You've seen the SAS AI foundation, experienced the 40-second deployment, and tested the live banking intelligence. Now discover how this positions Bangkok Bank as Thailand's AI banking leader.
+            </p>
+            <a href="bangkok-opportunity.html" class="qr-button" style="text-decoration: none; font-size: 1.1rem; padding: 15px 30px;">
+                Explore Bangkok Bank Strategy →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // API Base URL
+        const API_BASE = 'https://f2883b069684.ngrok-free.app';
+        const MOBILE_URL = 'https://f2883b069684.ngrok-free.app';
+        const DASHBOARD_URL = 'https://srourslaw.github.io/thakral-bangkok-bank-ai/';
+
+        // Customer data for testing
+        const customerData = {
+            premium: {
+                "Income": 450000,
+                "Age": 42,
+                "LoanAmount": 1500000,
+                "CreditScore": 785,
+                "DebtToIncome": 0.15,
+                "EmploymentYears": 18,
+                "LoanTerm": 30,
+                "SocialMediaRiskScore": 1,
+                "DeviceUsageScore": 92,
+                "NumberOfProducts": 5,
+                "HasInvestmentAccount": true,
+                "AccountTenure": 84,
+                "LatePayments": 0,
+                "OverdraftEvents": 0
+            },
+            standard: {
+                "Income": 180000,
+                "Age": 35,
+                "LoanAmount": 500000,
+                "CreditScore": 720,
+                "DebtToIncome": 0.28,
+                "EmploymentYears": 8,
+                "LoanTerm": 30,
+                "SocialMediaRiskScore": 3,
+                "DeviceUsageScore": 75,
+                "NumberOfProducts": 2,
+                "HasInvestmentAccount": false,
+                "AccountTenure": 36,
+                "LatePayments": 0,
+                "OverdraftEvents": 1
+            },
+            highrisk: {
+                "Income": 95000,
+                "Age": 24,
+                "LoanAmount": 380000,
+                "CreditScore": 580,
+                "DebtToIncome": 0.65,
+                "EmploymentYears": 2,
+                "LoanTerm": 25,
+                "SocialMediaRiskScore": 4,
+                "DeviceUsageScore": 45,
+                "NumberOfProducts": 1,
+                "HasInvestmentAccount": false,
+                "AccountTenure": 8,
+                "LatePayments": 3,
+                "OverdraftEvents": 4
+            }
+        };
+
+        // Generate QR Codes
+        function generateQRCodes() {
+            // Mobile QR
+            QRCode.toCanvas(document.getElementById('mobileQR'), MOBILE_URL, {
+                width: 180,
+                margin: 2,
+                color: {
+                    dark: '#1e293b',
+                    light: '#ffffff'
+                }
+            });
+
+            // Dashboard QR
+            QRCode.toCanvas(document.getElementById('dashboardQR'), DASHBOARD_URL, {
+                width: 180,
+                margin: 2,
+                color: {
+                    dark: '#1e293b',
+                    light: '#ffffff'
+                }
+            });
+
+            // API QR
+            QRCode.toCanvas(document.getElementById('apiQR'), API_BASE + '/docs', {
+                width: 180,
+                margin: 2,
+                color: {
+                    dark: '#1e293b',
+                    light: '#ffffff'
+                }
+            });
+        }
+
+        // Test customer scenarios
+        function testCustomer(type) {
+            const customer = customerData[type];
+            const responseDiv = document.getElementById('apiResponse');
+
+            responseDiv.style.display = 'block';
+            responseDiv.innerHTML = '🔄 Analyzing customer profile with SAS AI model...';
+            responseDiv.scrollIntoView({ behavior: 'smooth' });
+
+            // Show simulated API call
+            setTimeout(() => {
+                const mockResponse = {
+                    customer_id: `BBK-${Math.random().toString(36).substr(2, 9).toUpperCase()}`,
+                    risk_assessment: {
+                        risk_level: type === 'premium' ? 'LOW' : type === 'standard' ? 'MEDIUM' : 'HIGH',
+                        risk_probability: type === 'premium' ? 0.12 : type === 'standard' ? 0.34 : 0.67,
+                        confidence_score: type === 'premium' ? 0.94 : type === 'standard' ? 0.87 : 0.91
+                    },
+                    alternative_data_insights: {
+                        social_media_impact: type === 'premium' ? '+12% accuracy lift' : type === 'standard' ? '+8% accuracy lift' : '+15% risk detection',
+                        device_behavior_score: customer.DeviceUsageScore,
+                        relationship_depth: customer.NumberOfProducts > 3 ? 'Deep' : customer.NumberOfProducts > 1 ? 'Standard' : 'Limited'
+                    },
+                    recommendations: {
+                        loan_decision: type === 'premium' ? 'APPROVE' : type === 'standard' ? 'APPROVE_WITH_CONDITIONS' : 'REFER_TO_SPECIALIST',
+                        interest_rate: type === 'premium' ? '3.2%' : type === 'standard' ? '4.1%' : '5.8%',
+                        suggested_limit: type === 'premium' ? customer.LoanAmount : type === 'standard' ? customer.LoanAmount * 0.9 : customer.LoanAmount * 0.6
+                    },
+                    business_impact: {
+                        processing_time: '<2 seconds vs 45 minutes traditional',
+                        analyst_time_saved: '89%',
+                        customer_experience: type === 'premium' ? 'Premium white-glove service' : type === 'standard' ? 'Streamlined approval process' : 'Specialist consultation offered'
+                    },
+                    timestamp: new Date().toISOString(),
+                    model_version: 'Bangkok_Bank_SAS_AI_v2.1'
+                };
+
+                responseDiv.innerHTML = JSON.stringify(mockResponse, null, 2);
+
+                // Track interaction
+                gtag('event', 'customer_test', {
+                    'event_category': 'Banking Intelligence',
+                    'event_label': type
+                });
+            }, 2000);
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Risk Distribution Chart
+            const riskCtx = document.getElementById('riskChart').getContext('2d');
+            new Chart(riskCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Low Risk (Premium)', 'Medium Risk (Standard)', 'High Risk', 'Under Review'],
+                    datasets: [{
+                        data: [35, 42, 18, 5],
+                        backgroundColor: ['#10b981', '#fbbf24', '#ef4444', '#6b7280'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: 'white', padding: 15, font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+
+            // Alternative Data Impact
+            const altDataCtx = document.getElementById('altDataChart').getContext('2d');
+            new Chart(altDataCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Traditional Model', 'With Social Media', 'With Device Data', 'Full Alt Data'],
+                    datasets: [{
+                        label: 'Accuracy',
+                        data: [0.72, 0.78, 0.84, 0.876],
+                        backgroundColor: ['#6b7280', '#fbbf24', '#10b981', '#059669']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            min: 0.65,
+                            max: 0.9
+                        },
+                        x: {
+                            ticks: { color: 'white', font: { size: 10 } },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // Customer Lifetime Value
+            const clvCtx = document.getElementById('clvChart').getContext('2d');
+            new Chart(clvCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Premium Customers',
+                        data: Array.from({length: 20}, () => ({
+                            x: Math.random() * 100 + 50,
+                            y: Math.random() * 800000 + 400000
+                        })),
+                        backgroundColor: '#10b981',
+                        borderColor: '#10b981'
+                    }, {
+                        label: 'Standard Customers',
+                        data: Array.from({length: 40}, () => ({
+                            x: Math.random() * 80 + 20,
+                            y: Math.random() * 400000 + 100000
+                        })),
+                        backgroundColor: '#fbbf24',
+                        borderColor: '#fbbf24'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'white', font: { size: 11 } }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Relationship Score', color: 'white' },
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Lifetime Value (฿)', color: 'white' },
+                            ticks: {
+                                color: 'white',
+                                callback: function(value) {
+                                    return '฿' + (value/1000) + 'K';
+                                }
+                            },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                        }
+                    }
+                }
+            });
+
+            // Performance Trends
+            const trendsCtx = document.getElementById('trendsChart').getContext('2d');
+            new Chart(trendsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        label: 'Model Accuracy',
+                        data: [0.72, 0.74, 0.78, 0.81, 0.83, 0.85, 0.87, 0.875, 0.876],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Processing Speed (ms)',
+                        data: [150, 140, 125, 110, 98, 92, 88, 85, 82],
+                        borderColor: '#fbbf24',
+                        backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'white', font: { size: 11 } }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: 'white' },
+                            grid: { display: false }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            ticks: { color: 'white' },
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            min: 0.65
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            ticks: { color: 'white' },
+                            grid: { drawOnChartArea: false },
+                            max: 200
+                        }
+                    }
+                }
+            });
+        }
+
+        // QR Code refresh functions
+        function refreshMobileQR() {
+            generateQRCodes();
+        }
+
+        function refreshDashboardQR() {
+            generateQRCodes();
+        }
+
+        function refreshAPIQR() {
+            generateQRCodes();
+        }
+
+        // Check API status
+        function checkAPIStatus() {
+            fetch(API_BASE + '/health')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('apiStatusText').innerHTML = '🟢 Bangkok Bank Credit API - LIVE';
+                })
+                .catch(() => {
+                    document.getElementById('apiStatusText').innerHTML = '🟡 Bangkok Bank Credit API - DEMO MODE';
+                });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            generateQRCodes();
+            initializeCharts();
+            checkAPIStatus();
+
+            // Refresh API status every 30 seconds
+            setInterval(checkAPIStatus, 30000);
+        });
+
+        // Track page view
+        gtag('event', 'page_view', {
+            'event_category': 'Chapter',
+            'event_label': 'Banking Intelligence'
+        });
+    </script>
+</body>
+</html>
